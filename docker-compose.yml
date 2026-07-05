@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: f1
+      POSTGRES_PASSWORD: f1
+      POSTGRES_DB: f1_race_intel
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U f1 -d f1_race_intel"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://f1:f1@db:5432/f1_race_intel
+      OPENF1_BASE_URL: https://api.openf1.org/v1
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src:ro
+
+volumes:
+  pgdata:
