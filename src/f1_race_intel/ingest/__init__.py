@@ -1,1 +1,3 @@
-"""ETL jobs for OpenF1 / Ergast — implement in next milestone."""
+from f1_race_intel.data.services.ingest import IngestService
+
+__all__ = ["IngestService"]

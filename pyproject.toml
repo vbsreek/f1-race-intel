@@ -1,6 +1,6 @@
 [project]
 name = "f1-race-intel"
-version = "0.1.0"
+version = "0.2.0"
 description = "F1 analytics: ingest timing/telemetry, model stints, serve APIs"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -11,7 +11,11 @@ dependencies = [
     "sqlalchemy>=2.0.0",
     "psycopg2-binary>=2.9.0",
     "pydantic-settings>=2.6.0",
+    "alembic>=1.14.0",
 ]
+
+[project.scripts]
+f1-ingest = "f1_race_intel.cli:main"
 
 [project.optional-dependencies]
 dev = [
